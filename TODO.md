@@ -26,3 +26,6 @@
 
 ## GitHub publication
 - [x] Connect the completed portfolio project to the user's GitHub through the platform's confirmation flow and preserve the latest accepted checkpoint.
+
+## Vercel public deployment
+- [ ] Deploy the portfolio from GitHub main to a public Vercel production URL so the user has a live link; ensure the portrait photos, CV, training certificate, and WeChat QR are served from Vercel-compatible assets.

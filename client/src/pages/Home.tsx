@@ -20,11 +20,11 @@ import {
 } from "lucide-react";
 import { portfolioCopy, type Language } from "@/lib/portfolioContent";
 
-const PORTRAIT = "/manus-storage/1725459965764_203594ed.webp";
-const CV = "/manus-storage/MdTafimAhammed_CV_098c3b2c.pdf";
-const CERTIFICATE = "/manus-storage/WeixinImage_20261110141032_92_112_f3ed83ff.webp";
-const STUDY_PHOTO = "/manus-storage/IMG_20240517_214604_a95dd76e.webp";
-const WECHAT_QR = "/manus-storage/wechat-qr_6b3c14e2.jpg";
+const PORTRAIT = "/assets/tafim-portrait.webp";
+const CV = "/assets/MdTafimAhammed_CV.pdf";
+const CERTIFICATE = "/assets/training-certificate.webp";
+const STUDY_PHOTO = "/assets/tafim-study.webp";
+const WECHAT_QR = "/assets/wechat-qr.jpg";
 const EMAIL = "mdtafim77889@gmail.com";
 const PHONE = "+8628383070356";
 const FACEBOOK = "https://www.facebook.com/tafim025";
