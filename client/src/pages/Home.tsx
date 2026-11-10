@@ -29,15 +29,16 @@ const EMAIL = "mdtafim77889@gmail.com";
 const PHONE = "+8628383070356";
 const FACEBOOK = "https://www.facebook.com/tafim025";
 
-function Reveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function Reveal({ children, className = "", delay = 0, from = "up" }: { children: React.ReactNode; className?: string; delay?: number; from?: "up" | "left" | "right" }) {
   const reduceMotion = useReducedMotion();
+  const startingPosition = from === "left" ? { x: -34, y: 0 } : from === "right" ? { x: 34, y: 0 } : { x: 0, y: 28 };
   return (
     <motion.div
       className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={reduceMotion ? false : { opacity: 0, ...startingPosition, scale: 0.985, filter: "blur(7px)" }}
+      whileInView={{ opacity: 1, x: 0, y: 0, scale: 1, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.16 }}
-      transition={{ duration: reduceMotion ? 0 : 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: reduceMotion ? 0 : 0.82, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
@@ -52,6 +53,7 @@ export default function Home() {
   const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState("top");
   const languagePickerRef = useRef<HTMLDivElement>(null);
   const copy = portfolioCopy[language];
 
@@ -73,6 +75,12 @@ export default function Home() {
     const onScroll = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0);
+      const sectionIds = ["top", "about", "experience", "education", "contact"];
+      const current = sectionIds.reduce((active, id) => {
+        const section = document.getElementById(id);
+        return section && section.getBoundingClientRect().top <= window.innerHeight * 0.42 ? id : active;
+      }, "top");
+      setActiveSection(current);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -86,10 +94,25 @@ export default function Home() {
     { href: "#education", label: copy.nav.education },
     { href: "#contact", label: copy.nav.contact },
   ];
+  const chapterLinks = [
+    { id: "top", label: language === "zh" ? "首页" : language === "bn" ? "শুরু" : "Start" },
+    { id: "about", label: copy.nav.about },
+    { id: "experience", label: copy.nav.experience },
+    { id: "education", label: copy.nav.education },
+    { id: "contact", label: copy.nav.contact },
+  ];
 
   return (
     <main className="portfolio-shell">
       <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress / 100})` }} />
+      <nav className="scroll-rail" aria-label={language === "zh" ? "页面章节" : language === "bn" ? "পৃষ্ঠার বিভাগ" : "Page sections"}>
+        <span className="scroll-rail-track" aria-hidden="true"><span style={{ height: `${scrollProgress}%` }} /></span>
+        {chapterLinks.map((link, index) => (
+          <a key={link.id} href={`#${link.id}`} aria-label={link.label} aria-current={activeSection === link.id ? "location" : undefined}>
+            <span>{String(index).padStart(2, "0")}</span>
+          </a>
+        ))}
+      </nav>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Md Tafim Ahammed — home" onClick={closeMenu}>
           <span className="brand-seal"><span>TA</span><i>译</i></span>
@@ -135,6 +158,14 @@ export default function Home() {
       </header>
 
       <section className="hero-section" id="top">
+        <div className="hero-atmosphere" aria-hidden="true">
+          <span className="ambient-halo halo-one" />
+          <span className="ambient-halo halo-two" />
+          <span className="ambient-orbit orbit-one" />
+          <span className="ambient-orbit orbit-two" />
+          <span className="ambient-fleck fleck-one" />
+          <span className="ambient-fleck fleck-two" />
+        </div>
         <div className="hero-copy">
           <Reveal>
             <div className="eyebrow"><span className="eyebrow-line" />{copy.eyebrow}</div>
@@ -148,7 +179,7 @@ export default function Home() {
             <div className="hero-meta"><MapPin size={15} strokeWidth={1.7} /><span>{copy.location}</span></div>
           </Reveal>
         </div>
-        <Reveal className="hero-visual" delay={0.12}>
+        <Reveal className="hero-visual" delay={0.12} from="right">
           <div className="portrait-frame">
             <img src={PORTRAIT} alt="Portrait of Md Tafim Ahammed wearing a headset" fetchPriority="high" />
             <div className="portrait-overlay" />
@@ -162,11 +193,11 @@ export default function Home() {
       <section className="about-section section-pad" id="about">
         <div className="section-index"><span>01</span><span className="index-rule" /></div>
         <div className="about-layout">
-          <Reveal className="about-heading">
+          <Reveal className="about-heading" from="left">
             <p className="section-kicker">{copy.profileLabel}</p>
             <h2>{copy.aboutTitle}</h2>
           </Reveal>
-          <Reveal className="about-body" delay={0.1}>
+          <Reveal className="about-body" delay={0.1} from="right">
             <p>{copy.aboutText}</p>
             <div className="about-quote"><span>“</span><p>{copy.aboutQuote}</p></div>
             <figure className="about-photo">
@@ -196,7 +227,7 @@ export default function Home() {
             { title: copy.analyst, text: copy.analystText, icon: BriefcaseBusiness, tag: language === "zh" ? "自由职业" : language === "bn" ? "ফ্রিল্যান্স" : "Freelance" },
           ].map((item, index) => {
             const Icon = item.icon;
-            return <Reveal key={item.title} className="experience-row" delay={index * 0.08}>
+            return <Reveal key={item.title} className="experience-row" delay={index * 0.08} from={index % 2 === 0 ? "left" : "right"}>
               <div className="experience-icon"><Icon size={19} strokeWidth={1.6} /></div>
               <div className="experience-content"><div className="experience-title-line"><h3>{item.title}</h3><span className="experience-tag">{item.tag}</span></div><p>{item.text}</p></div>
               <span className="experience-index">0{index + 1}</span>
@@ -208,14 +239,14 @@ export default function Home() {
       <section className="education-section section-pad" id="education">
         <div className="section-index"><span>03</span><span className="index-rule" /></div>
         <div className="education-layout">
-          <Reveal className="education-intro"><p className="section-kicker">{copy.educationLabel}</p><h2>{copy.educationTitle}</h2><p className="education-note">{language === "zh" ? "持续学习 · 稳步前行" : language === "bn" ? "শেখা চলুক · এগিয়ে যাই" : "Learning continuously, moving forward."}</p></Reveal>
+          <Reveal className="education-intro" from="left"><p className="section-kicker">{copy.educationLabel}</p><h2>{copy.educationTitle}</h2><p className="education-note">{language === "zh" ? "持续学习 · 稳步前行" : language === "bn" ? "শেখা চলুক · এগিয়ে যাই" : "Learning continuously, moving forward."}</p></Reveal>
           <div className="education-content">
-            <Reveal className="education-card"><span className="education-icon"><GraduationCap size={20} /></span><div><p className="card-overline">{language === "zh" ? "专科文凭" : language === "bn" ? "ডিপ্লোমা" : "Diploma"}</p><h3>{copy.diploma}</h3><p>{copy.diplomaDetail}</p></div><span className="education-date">{language === "zh" ? "2027年6月" : language === "bn" ? "জুন ২০২৭" : "Jun 2027"}</span></Reveal>
-            <Reveal className="education-card education-card-secondary" delay={0.1}><span className="education-icon"><BookOpen size={19} /></span><div><p className="card-overline">{language === "zh" ? "中等教育" : language === "bn" ? "মাধ্যমিক শিক্ষা" : "School education"}</p><h3>{copy.school}</h3><p>{copy.schoolDetail}</p></div></Reveal>
+            <Reveal className="education-card" from="right"><span className="education-icon"><GraduationCap size={20} /></span><div><p className="card-overline">{language === "zh" ? "专科文凭" : language === "bn" ? "ডিপ্লোমা" : "Diploma"}</p><h3>{copy.diploma}</h3><p>{copy.diplomaDetail}</p></div><span className="education-date">{language === "zh" ? "2027年6月" : language === "bn" ? "জুন ২০২৭" : "Jun 2027"}</span></Reveal>
+            <Reveal className="education-card education-card-secondary" delay={0.1} from="right"><span className="education-icon"><BookOpen size={19} /></span><div><p className="card-overline">{language === "zh" ? "中等教育" : language === "bn" ? "মাধ্যমিক শিক্ষা" : "School education"}</p><h3>{copy.school}</h3><p>{copy.schoolDetail}</p></div></Reveal>
           </div>
         </div>
         <div className="credentials-skills">
-          <Reveal className="credentials-block"><p className="section-kicker">{copy.credentialsLabel}</p><h3>{copy.credentialsTitle}</h3><ul>{copy.credentials.map((item) => <li key={item}><span className="checkmark">✓</span>{item}</li>)}</ul>
+          <Reveal className="credentials-block" from="left"><p className="section-kicker">{copy.credentialsLabel}</p><h3>{copy.credentialsTitle}</h3><ul>{copy.credentials.map((item) => <li key={item}><span className="checkmark">✓</span>{item}</li>)}</ul>
             <a className="training-proof" href={CERTIFICATE} target="_blank" rel="noreferrer">
               <img src={CERTIFICATE} alt="Chinese-language certificate for the October–November 2026 short-term training" loading="lazy" />
               <span className="training-proof-copy">
@@ -226,15 +257,15 @@ export default function Home() {
               <ArrowUpRight className="training-proof-arrow" size={16} />
             </a>
           </Reveal>
-          <Reveal className="skills-block" delay={0.08}><p className="section-kicker">{copy.skillsLabel}</p><h3>{copy.skillsTitle}</h3><div className="skill-pills">{copy.skills.map((skill) => <span key={skill}>{skill}</span>)}</div></Reveal>
+          <Reveal className="skills-block" delay={0.08} from="right"><p className="section-kicker">{copy.skillsLabel}</p><h3>{copy.skillsTitle}</h3><div className="skill-pills">{copy.skills.map((skill) => <span key={skill}>{skill}</span>)}</div></Reveal>
         </div>
       </section>
 
       <section className="contact-section section-pad" id="contact">
         <div className="section-index section-index-light"><span>04</span><span className="index-rule" /></div>
         <div className="contact-layout">
-          <Reveal className="contact-intro"><p className="section-kicker">{copy.contactEyebrow}</p><h2>{copy.contactTitle}</h2><p>{copy.contactText}</p><a className="button button-light" href={`mailto:${EMAIL}`}>{copy.email}<ArrowRight size={17} /></a></Reveal>
-          <Reveal className="contact-links" delay={0.1}>
+          <Reveal className="contact-intro" from="left"><p className="section-kicker">{copy.contactEyebrow}</p><h2>{copy.contactTitle}</h2><p>{copy.contactText}</p><a className="button button-light" href={`mailto:${EMAIL}`}>{copy.email}<ArrowRight size={17} /></a></Reveal>
+          <Reveal className="contact-links" delay={0.1} from="right">
             <a href={`mailto:${EMAIL}`}><span className="contact-icon"><Mail size={18} /></span><span><small>{copy.email}</small><strong>{EMAIL}</strong></span><ArrowUpRight className="contact-arrow" size={17} /></a>
             <a href={`tel:${PHONE}`}><span className="contact-icon"><Phone size={18} /></span><span><small>{copy.phone}</small><strong>{PHONE}</strong></span><ArrowUpRight className="contact-arrow" size={17} /></a>
             <a href={FACEBOOK} target="_blank" rel="noreferrer"><span className="contact-icon"><Facebook size={18} /></span><span><small>{copy.facebook}</small><strong>tafim025</strong></span><ArrowUpRight className="contact-arrow" size={17} /></a>

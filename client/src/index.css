@@ -435,3 +435,58 @@ h1, h2, h3, p { margin-top: 0; }
 .wechat-qr-copy strong { color: var(--cream); font-size: 11px; font-weight: 500; line-height: 1.6; }
 .wechat-qr-copy > span { display: inline-flex; align-items: center; gap: 4px; color: #a3cabc; font-size: 9px; }
 @media (max-width: 390px) { .wechat-qr-card { grid-template-columns: 96px minmax(0,1fr); gap: 12px; } .wechat-qr-card > img { width: 96px; height: 96px; } }
+
+
+/* Moving Ink & Jade ambience and chapter-based scroll navigation */
+.scroll-progress { background: linear-gradient(90deg, #2f7468, #78a99d 72%, #bfd2c7); }
+.scroll-progress::after { position: absolute; top: 0; right: 0; width: 22px; height: 3px; content: ""; background: #ecf5ef; box-shadow: 0 0 12px 3px rgba(120,169,157,.55); }
+.hero-section { isolation: isolate; overflow: hidden; background: linear-gradient(128deg, #f7f6f0 0%, #f0f3ed 47%, #e7f0eb 100%); }
+.hero-atmosphere { position: absolute; z-index: 0; inset: 0; overflow: hidden; pointer-events: none; }
+.hero-visual { z-index: 1; }
+.scroll-cue { z-index: 2; }
+.ambient-halo { position: absolute; border-radius: 50%; filter: blur(14px); opacity: .62; animation: halo-drift 14s ease-in-out infinite alternate; }
+.halo-one { top: 7%; right: 21%; width: clamp(210px, 27vw, 360px); aspect-ratio: 1; background: radial-gradient(circle, rgba(120,169,157,.18), rgba(120,169,157,0) 70%); }
+.halo-two { bottom: -13%; left: 10%; width: clamp(150px, 20vw, 260px); aspect-ratio: 1; background: radial-gradient(circle, rgba(217,216,210,.55), rgba(217,216,210,0) 72%); animation-delay: -5s; }
+.ambient-orbit { position: absolute; display: block; border: 1px solid rgba(47,116,104,.12); border-radius: 50%; }
+.orbit-one { top: 3%; right: 6%; width: clamp(300px, 39vw, 570px); aspect-ratio: 1; border-style: dashed; animation: orbit-turn 54s linear infinite; }
+.orbit-two { top: -17%; right: 4%; width: clamp(390px, 49vw, 710px); aspect-ratio: 1; border-color: rgba(47,116,104,.075); animation: orbit-turn-reverse 72s linear infinite; }
+.ambient-orbit::after { position: absolute; top: 17%; left: 12%; width: 7px; height: 7px; content: ""; border-radius: 50%; background: #78a99d; box-shadow: 0 0 0 6px rgba(120,169,157,.12), 0 0 18px rgba(47,116,104,.4); }
+.orbit-two::after { top: auto; right: 15%; bottom: 21%; left: auto; width: 5px; height: 5px; background: #c2c5bb; box-shadow: 0 0 0 5px rgba(217,216,210,.32); }
+.ambient-fleck { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: rgba(47,116,104,.38); animation: fleck-drift 8s ease-in-out infinite; }
+.fleck-one { top: 24%; left: 37%; }
+.fleck-two { right: 39%; bottom: 22%; width: 4px; height: 4px; animation-delay: -3.6s; }
+.about-section { background: linear-gradient(126deg, #e9f0ea 0%, #e4ede7 52%, #eeeae0 100%); }
+.experience-section { background: linear-gradient(120deg, #f3f1e9, #eef2ec 55%, #f5f2eb); }
+.education-section { background: linear-gradient(132deg, #e7eee8, #e4ece7 50%, #eeeae0); }
+.contact-section { overflow: hidden; background: radial-gradient(ellipse at 82% 15%, rgba(47,116,104,.24), transparent 38%), linear-gradient(120deg, #171a1c, #202826 62%, #171a1c); }
+.contact-section::after { position: absolute; right: -165px; bottom: -245px; width: 510px; height: 510px; content: ""; border: 1px solid rgba(147,186,174,.13); border-radius: 50%; box-shadow: 0 0 0 34px rgba(147,186,174,.025), 0 0 0 70px rgba(147,186,174,.018); pointer-events: none; animation: contact-breathe 12s ease-in-out infinite alternate; }
+.contact-layout, .contact-section > .section-index { position: relative; z-index: 1; }
+.scroll-rail { position: fixed; z-index: 28; top: 50%; right: 17px; display: grid; justify-items: center; gap: 12px; width: 30px; transform: translateY(-50%); }
+.scroll-rail-track { position: absolute; top: 13px; bottom: 13px; left: 50%; z-index: -1; width: 1px; overflow: hidden; background: rgba(47,116,104,.18); }
+.scroll-rail-track > span { display: block; width: 100%; background: var(--jade); transition: height .24s linear; }
+.scroll-rail > a { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid transparent; border-radius: 50%; color: #787d77; background: rgba(246,244,239,.88); font: 9px var(--serif); transition: color .22s, background .22s, border-color .22s, transform .22s, box-shadow .22s; }
+.scroll-rail > a:hover { color: var(--jade); border-color: rgba(47,116,104,.36); transform: scale(1.1); }
+.scroll-rail > a[aria-current="location"] { color: var(--cream); border-color: var(--jade); background: var(--jade); box-shadow: 0 0 0 4px rgba(47,116,104,.12); transform: scale(1.08); }
+.site-header { background: rgba(242,243,235,.88); }
+@keyframes halo-drift { 0% { transform: translate3d(-10px, 7px, 0) scale(.94); } 100% { transform: translate3d(18px, -15px, 0) scale(1.08); } }
+@keyframes orbit-turn { to { transform: rotate(360deg); } }
+@keyframes orbit-turn-reverse { to { transform: rotate(-360deg); } }
+@keyframes fleck-drift { 0%,100% { opacity: .25; transform: translate3d(0,0,0); } 50% { opacity: .9; transform: translate3d(9px,-15px,0); } }
+@keyframes contact-breathe { 0% { transform: scale(.94) rotate(-8deg); opacity: .45; } 100% { transform: scale(1.04) rotate(6deg); opacity: .9; } }
+@media (max-width: 1250px) { .scroll-rail { display: none; } }
+@media (max-width: 760px) {
+  .hero-section { background: linear-gradient(155deg, #f6f4ed, #eef2eb 62%, #e7efea); }
+  .halo-one { top: 28%; right: -15%; width: 270px; }
+  .orbit-one { top: 25%; right: -42%; width: 360px; }
+  .orbit-two { top: 20%; right: -47%; width: 440px; }
+  .about-section { background: linear-gradient(145deg, #e8eee8, #e5ece6 68%, #efeadf); }
+  .experience-section { background: linear-gradient(145deg, #f3f0e8, #edf1eb); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ambient-halo, .ambient-orbit, .ambient-fleck, .contact-section::after { animation: none !important; }
+  .scroll-rail-track > span, .scroll-rail > a { transition: none !important; }
+}
+
+.scroll-rail { isolation: isolate; }
+
+.language-toggle:focus-visible, .language-menu button:focus-visible { outline: 2px solid var(--jade); outline-offset: 3px; }

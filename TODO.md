@@ -21,5 +21,8 @@
 - [x] The supplied WeChat QR image is included in the contact section as a clear, clickable card with a localized scan/open instruction.
 
 ## Motion and responsive visual design
-- [x] Scroll-triggered aesthetic motion and section transitions preserve readability and usability.
+- [x] Replace the plain-looking light backdrop with visible but restrained Ink & Jade-tinted ambience and continuously moving decorative forms; add a more distinctive scroll experience with varied reveal directions and a chapter progress rail, while respecting reduced-motion preferences.
 - [x] Desktop, tablet, and mobile layouts are responsive, follow the supplied visual reference and portrait, and use the user-selected Ink & Jade palette: ink #171A1C, warm off-white #F6F4EF, jade green #2F7468, and stone gray #D9D8D2.
+
+## GitHub publication
+- [ ] Connect the completed portfolio project to the user's GitHub through the platform's confirmation flow and preserve the latest accepted checkpoint.
