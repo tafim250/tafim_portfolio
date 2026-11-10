@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowDown,
@@ -9,6 +9,7 @@ import {
   BriefcaseBusiness,
   Facebook,
   FileText,
+  Globe2,
   GraduationCap,
   Languages,
   Mail,
@@ -47,14 +48,25 @@ export default function Home() {
     const saved = localStorage.getItem("tafim-language");
     return saved === "zh" || saved === "bn" ? saved : "en";
   });
+  const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const languagePickerRef = useRef<HTMLDivElement>(null);
   const copy = portfolioCopy[language];
 
   useEffect(() => {
     document.documentElement.lang = language === "zh" ? "zh-CN" : language;
     localStorage.setItem("tafim-language", language);
   }, [language]);
+
+  useEffect(() => {
+    if (!languageMenuOpen) return;
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!languagePickerRef.current?.contains(event.target as Node)) setLanguageMenuOpen(false);
+    };
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    return () => document.removeEventListener("pointerdown", closeOnOutsideClick);
+  }, [languageMenuOpen]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -87,12 +99,33 @@ export default function Home() {
           <a className="nav-cta" href="#contact" onClick={closeMenu}>{copy.nav.hire}<ArrowUpRight size={15} /></a>
         </nav>
         <div className="header-tools">
-          <div className="language-switch" role="group" aria-label={copy.language}>
-            {(["en", "zh", "bn"] as Language[]).map((item) => (
-              <button key={item} type="button" aria-pressed={language === item} onClick={() => setLanguage(item)}>
-                {copy.languageNames[item]}
-              </button>
-            ))}
+          <div className="language-picker" ref={languagePickerRef}>
+            <button
+              className="language-toggle"
+              type="button"
+              aria-label={`${copy.language}: ${copy.languageNames[language]}`}
+              aria-expanded={languageMenuOpen}
+              aria-controls="language-menu"
+              title={copy.language}
+              onClick={() => setLanguageMenuOpen((open) => !open)}
+              onKeyDown={(event) => { if (event.key === "Escape") setLanguageMenuOpen(false); }}
+            >
+              <Globe2 size={19} aria-hidden="true" />
+              <span className="language-indicator" aria-hidden="true" />
+            </button>
+            <div className="language-menu" id="language-menu" role="group" aria-label={copy.language} hidden={!languageMenuOpen}>
+                {(["en", "zh", "bn"] as Language[]).map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    aria-pressed={language === item}
+                    onClick={() => { setLanguage(item); setLanguageMenuOpen(false); }}
+                  >
+                    <span>{copy.languageNames[item]}</span>
+                    {language === item && <span className="language-check" aria-hidden="true">✓</span>}
+                  </button>
+                ))}
+            </div>
           </div>
           <button className="menu-toggle" type="button" aria-label={menuOpen ? (language === "zh" ? "关闭菜单" : language === "bn" ? "মেনু বন্ধ করুন" : "Close menu") : (language === "zh" ? "打开菜单" : language === "bn" ? "মেনু খুলুন" : "Open menu")} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
             {menuOpen ? <X size={22} /> : <Menu size={22} />}

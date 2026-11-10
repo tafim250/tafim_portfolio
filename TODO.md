@@ -1,7 +1,7 @@
 # Portfolio outcomes
 
 ## Multilingual site-wide content
-- [x] English is the primary/default language. A visible language switcher lets visitors switch among English, Chinese, and Bangla; translated page content and labels update with the selection.
+- [x] English is the primary/default language. A single globe icon is visible in the header instead of showing three language labels at once; clicking it opens a compact menu where visitors can switch among English, Chinese, and Bangla, and translated page content and labels update with the selection.
 
 ## Portrait-led professional introduction
 - [x] The hero presents Md Tafim Ahammed, his Student and Mandarin Translator identity, a job-focused introduction, and the first supplied portrait photo; the second supplied study portrait also appears in the profile section.

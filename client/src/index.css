@@ -413,3 +413,16 @@ h1, h2, h3, p { margin-top: 0; }
 .about-photo { position: relative; width: 150px; margin: 27px 0 21px; padding: 7px 7px 26px; background: #e4e2dc; transform: rotate(-2deg); }
 .about-photo img { display: block; width: 100%; aspect-ratio: .78; object-fit: cover; object-position: center 37%; filter: grayscale(1) contrast(.96); }
 .about-photo figcaption { position: absolute; right: 7px; bottom: 6px; left: 7px; color: #616560; font: italic 10px var(--serif); text-align: center; }
+
+.language-picker { position: relative; z-index: 31; }
+.language-toggle { position: relative; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--jade); background: rgba(255,255,255,.32); transition: border-color .2s, color .2s, background .2s, transform .2s; }
+.language-toggle:hover, .language-toggle[aria-expanded="true"] { border-color: var(--jade); color: white; background: var(--jade); transform: translateY(-1px); }
+.language-indicator { position: absolute; right: 7px; bottom: 7px; width: 6px; height: 6px; border: 1px solid var(--cream); border-radius: 50%; background: var(--jade); }
+.language-toggle[aria-expanded="true"] .language-indicator { border-color: var(--jade); background: #d9eee4; }
+.language-menu { position: absolute; top: calc(100% + 9px); right: 0; z-index: 50; display: grid; width: 160px; gap: 3px; padding: 6px; border: 1px solid var(--line); background: #fffefa; box-shadow: 0 12px 30px rgba(23,26,28,.13); animation: language-in .18s ease-out both; }
+.language-menu[hidden] { display: none; }
+.language-menu button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 38px; padding: 8px 10px; border: 0; color: #555a56; background: transparent; text-align: left; font-size: 11px; transition: color .16s, background .16s; }
+.language-menu button:hover { color: var(--jade); background: #f0f3ee; }
+.language-menu button[aria-pressed="true"] { color: var(--jade); background: #e9f0eb; font-weight: 700; }
+.language-check { color: var(--jade); }
+@keyframes language-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
