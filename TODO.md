@@ -25,4 +25,4 @@
 - [x] Desktop, tablet, and mobile layouts are responsive, follow the supplied visual reference and portrait, and use the user-selected Ink & Jade palette: ink #171A1C, warm off-white #F6F4EF, jade green #2F7468, and stone gray #D9D8D2.
 
 ## GitHub publication
-- [ ] Connect the completed portfolio project to the user's GitHub through the platform's confirmation flow and preserve the latest accepted checkpoint.
+- [x] Connect the completed portfolio project to the user's GitHub through the platform's confirmation flow and preserve the latest accepted checkpoint.
