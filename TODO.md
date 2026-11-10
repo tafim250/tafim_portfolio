@@ -18,6 +18,7 @@
 ## CV access and job-focused contact
 - [x] A clear action allows visitors to view or download the supplied CV.
 - [x] Email (mdtafim77889@gmail.com), Facebook (https://www.facebook.com/tafim025), and phone (+8628383070356) are clickable contact options in a job-application-focused contact section.
+- [x] The supplied WeChat QR image is included in the contact section as a clear, clickable card with a localized scan/open instruction.
 
 ## Motion and responsive visual design
 - [x] Scroll-triggered aesthetic motion and section transitions preserve readability and usability.

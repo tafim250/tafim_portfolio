@@ -426,3 +426,12 @@ h1, h2, h3, p { margin-top: 0; }
 .language-menu button[aria-pressed="true"] { color: var(--jade); background: #e9f0eb; font-weight: 700; }
 .language-check { color: var(--jade); }
 @keyframes language-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+.wechat-qr-card { display: grid; grid-template-columns: 112px minmax(0,1fr); align-items: center; gap: 16px; margin-top: 17px; padding: 12px; border: 1px solid #444849; background: #202526; transition: border-color .2s, transform .2s, background .2s; }
+.wechat-qr-card:hover { border-color: #80ad9f; background: #252c2c; transform: translateY(-2px); }
+.wechat-qr-card > img { display: block; width: 112px; height: 112px; padding: 6px; object-fit: contain; background: #fff; }
+.wechat-qr-copy { display: grid; gap: 7px; min-width: 0; }
+.wechat-qr-copy small { color: #a3cabc; font-size: 9px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
+.wechat-qr-copy strong { color: var(--cream); font-size: 11px; font-weight: 500; line-height: 1.6; }
+.wechat-qr-copy > span { display: inline-flex; align-items: center; gap: 4px; color: #a3cabc; font-size: 9px; }
+@media (max-width: 390px) { .wechat-qr-card { grid-template-columns: 96px minmax(0,1fr); gap: 12px; } .wechat-qr-card > img { width: 96px; height: 96px; } }

@@ -24,6 +24,7 @@ const PORTRAIT = "/manus-storage/1725459965764_203594ed.webp";
 const CV = "/manus-storage/MdTafimAhammed_CV_098c3b2c.pdf";
 const CERTIFICATE = "/manus-storage/WeixinImage_20261110141032_92_112_f3ed83ff.webp";
 const STUDY_PHOTO = "/manus-storage/IMG_20240517_214604_a95dd76e.webp";
+const WECHAT_QR = "/manus-storage/wechat-qr_6b3c14e2.jpg";
 const EMAIL = "mdtafim77889@gmail.com";
 const PHONE = "+8628383070356";
 const FACEBOOK = "https://www.facebook.com/tafim025";
@@ -238,6 +239,10 @@ export default function Home() {
             <a href={`tel:${PHONE}`}><span className="contact-icon"><Phone size={18} /></span><span><small>{copy.phone}</small><strong>{PHONE}</strong></span><ArrowUpRight className="contact-arrow" size={17} /></a>
             <a href={FACEBOOK} target="_blank" rel="noreferrer"><span className="contact-icon"><Facebook size={18} /></span><span><small>{copy.facebook}</small><strong>tafim025</strong></span><ArrowUpRight className="contact-arrow" size={17} /></a>
             <a className="cv-contact-link" href={CV} target="_blank" rel="noreferrer"><span className="contact-icon"><FileText size={18} /></span><span><small>{copy.cvAction}</small><strong>MdTafimAhammed_CV.pdf</strong></span><ArrowUpRight className="contact-arrow" size={17} /></a>
+            <a className="wechat-qr-card" href={WECHAT_QR} target="_blank" rel="noreferrer" aria-label={`${copy.wechat}: ${copy.viewQr}`}>
+              <img src={WECHAT_QR} alt="WeChat QR code to contact Md Tafim Ahammed" loading="lazy" />
+              <span className="wechat-qr-copy"><small>{copy.wechat}</small><strong>{copy.wechatText}</strong><span>{copy.viewQr}<ArrowUpRight size={13} /></span></span>
+            </a>
           </Reveal>
         </div>
       </section>

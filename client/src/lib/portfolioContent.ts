@@ -41,6 +41,9 @@ type Copy = {
   email: string;
   phone: string;
   facebook: string;
+  wechat: string;
+  wechatText: string;
+  viewQr: string;
   footer: string;
   cvAction: string;
   role: string;
@@ -89,6 +92,9 @@ export const portfolioCopy: Record<Language, Copy> = {
     email: "Email",
     phone: "Phone",
     facebook: "Facebook",
+    wechat: "WeChat QR",
+    wechatText: "Scan to connect on WeChat.",
+    viewQr: "Open QR image",
     footer: "A language portfolio by Md Tafim Ahammed.",
     cvAction: "Open CV (PDF)",
     role: "Student · Mandarin Translator",
@@ -135,6 +141,9 @@ export const portfolioCopy: Record<Language, Copy> = {
     email: "电子邮件",
     phone: "电话",
     facebook: "Facebook",
+    wechat: "微信二维码",
+    wechatText: "扫描二维码，通过微信联系我。",
+    viewQr: "打开二维码图片",
     footer: "Md Tafim Ahammed 的语言作品集。",
     cvAction: "打开简历 (PDF)",
     role: "学生 · 普通话译者",
@@ -181,6 +190,9 @@ export const portfolioCopy: Record<Language, Copy> = {
     email: "ইমেইল",
     phone: "ফোন",
     facebook: "Facebook",
+    wechat: "WeChat QR",
+    wechatText: "QR code স্ক্যান করে WeChat-এ যোগাযোগ করুন।",
+    viewQr: "QR image খুলুন",
     footer: "Md Tafim Ahammed-এর ভাষাভিত্তিক portfolio।",
     cvAction: "CV খুলুন (PDF)",
     role: "শিক্ষার্থী · Mandarin Translator",
